@@ -7,6 +7,7 @@ const path = require('path');
 const followService = require('../services/followService');
 const Publication = require('../models/publicationModel');
 const Follow = require('../models/followModel');
+const validate = require('../helpers/validate');
 
 // Crear usuario
 const register = async (req, res) => {
@@ -22,6 +23,21 @@ const register = async (req, res) => {
             // Devolver respuesta
             return res.status(400).send({
                 message: "Todos los campos son obligatorios"
+            });
+
+        }
+
+        // Validacion avanzada
+        try{
+
+            validate(params);
+
+        }catch(error){
+
+            // Devolver respuesta
+            return res.status(400).send({
+                status: "error",
+                message: "Los datos no son válidos"
             });
 
         }
